@@ -1,4 +1,4 @@
-# CSE391_66ANM2-CNTT2_NguyenHuuTu
+# CSE391_66ANM2-CNTT2_NGUYENHUUTU
 # The Network Basics
 
 A beginner-friendly overview of how computer networks move data—from your device to a website and back. This guide focuses on the core concepts you’ll use constantly in software, IT, and cloud work: addressing, routing, protocols, and the most common troubleshooting ideas.

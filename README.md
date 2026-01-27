@@ -143,8 +143,3 @@ By the end of this guide, you should be able to:
 - VPNs and zero trust networking
 - HTTP/2, HTTP/3, QUIC
 
----
-
-## License
-
-Choose a license for your repo (MIT is common for simple learning projects). Add a `LICENSE` file if you want this to be open source.

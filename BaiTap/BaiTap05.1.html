@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management</title>
+    <style>
+        /* 1. Thiết lập chung */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Màu nền web */
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        /* 2. Khung chính (Container) - Tạo viền xanh bao quanh như ảnh */
+        .app-container {
+            width: 900px;
+            background-color: white;
+            border: 2px solid #3498db; /* Viền xanh dương */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* 3. Thanh Header (Màu đen) */
+        .header {
+            background-color: #222;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between; /* Đẩy logo sang trái, search sang phải */
+            align-items: center;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-name {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+        .nav-links a:hover { color: white; }
+
+        .search-box {
+            display: flex;
+            gap: 5px;
+        }
+
+        .search-box input {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+        }
+
+        .btn-search {
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 4. Phần nội dung chính */
+        .main-content {
+            padding: 20px;
+        }
+
+        /* Tiêu đề và nút Add */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .btn-add {
+            background-color: #007bff; /* Màu xanh nút Add */
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none; /* Nếu dùng thẻ a */
+            font-size: 14px;
+        }
+        .btn-add:hover { background-color: #0056b3; }
+
+        /* 5. Bảng dữ liệu (Table) */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Gộp đường viền */
+        }
+
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee; /* Đường kẻ mờ dưới mỗi dòng */
+            font-size: 14px;
+        }
+
+        th {
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Màu chữ cho các cột cụ thể để giống ảnh hơn */
+        td { color: #333; }
+
+        /* Các nút hành động (Action Buttons) */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn {
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-edit {
+            background-color: #ffc107; /* Màu vàng */
+            color: #333; /* Chữ màu đen cho dễ đọc trên nền vàng */
+        }
+        .btn-edit:hover { background-color: #e0a800; }
+
+        .btn-delete {
+            background-color: #dc3545; /* Màu đỏ */
+        }
+        .btn-delete:hover { background-color: #c82333; }
+
+        /* Căn chỉnh cột Action */
+        th:last-child, td:last-child {
+            width: 150px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="header">
+            <div class="brand-section">
+                <div class="brand-name">HR Management</div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <button class="btn-search">Search</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="content-header">
+                <h2 class="page-title">Employee</h2>
+                <button class="btn-add">+ Add</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Position</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Fatima Beatriz</td>
+                        <td>Fatima Beatriz@gmail.com</td>
+                        <td>0985674321</td>
+                        <td>Staff</td>
+                        <td class="action-buttons">
+                            <button class="btn btn-edit">Edit</button>
+                            <button class="btn btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Gabriel Hanna</td>
+                        <td>Gabriel Hanna@gmail.com</td>
+                        <td>0353674231</td>
+                        <td>Staff</td>
+                        <td class="action-buttons">
+                            <button class="btn btn-edit">Edit</button>
+                            <button class="btn btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Charles Diya</td>
+                        <td>Charles Diya@gmail.com</td>
+                        <td>0347658833</td>
+                        <td>Staff</td>
+                        <td class="action-buttons">
+                            <button class="btn btn-edit">Edit</button>
+                            <button class="btn btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Frank Lamdo</td>
+                        <td>Frank Lamdo@gmail.com</td>
+                        <td>0975444768</td>
+                        <td>Manager</td>
+                        <td class="action-buttons">
+                            <button class="btn btn-edit">Edit</button>
+                            <button class="btn btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Louis Tom</td>
+                        <td>Louis Tom@gmail.com</td>
+                        <td>0789568223</td>
+                        <td>Staff</td>
+                        <td class="action-buttons">
+                            <button class="btn btn-edit">Edit</button>
+                            <button class="btn btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

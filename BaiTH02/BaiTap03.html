@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập CSS Layout</title>
+    <style>
+        /* 1. Reset CSS cơ bản để đồng bộ trên các trình duyệt */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Sử dụng font chữ cơ bản, dễ đọc */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8; /* Màu nền xám nhạt để làm nổi bật khối thẻ màu trắng */
+            padding: 50px 20px;
+        }
+
+        /* 2. Container chính chứa toàn bộ nội dung */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 60px 50px;
+            /* Tạo 2 đường viền màu xanh nhạt ở hai bên theo thiết kế */
+            border-left: 4px solid #81d4fa;
+            border-right: 4px solid #81d4fa;
+        }
+
+        /* 3. Phần Tiêu đề chính */
+        .main-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 60px;
+            line-height: 1.6;
+            /* Font chữ trong ảnh có nét giống máy đánh chữ/monospace */
+            font-family: 'Courier New', Courier, monospace; 
+        }
+
+        /* 4. Vùng chứa nội dung 2 cột (Dùng Flexbox) */
+        .content-wrapper {
+            display: flex;
+            gap: 50px; /* Khoảng cách giữa thẻ bên trái và đoạn văn bên phải */
+            align-items: flex-start;
+        }
+
+        /* 5. Cột trái: Thẻ Card (Trắng, có bóng đổ) */
+        .info-card {
+            flex: 0 0 320px; /* Độ rộng cố định cho thẻ */
+            background-color: #ffffff;
+            padding: 40px;
+            /* Tạo hiệu ứng bóng đổ mờ để thẻ nổi lên trên nền */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
+        }
+
+        .info-card h2 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .info-card .description {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .author-info .name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .author-info .role {
+            font-size: 12px;
+            color: #5c9ce6; /* Màu xanh nước biển nhạt */
+        }
+
+        /* 6. Cột phải: Vùng chứa các đoạn văn bản */
+        .text-content {
+            flex: 1; /* Chiếm toàn bộ không gian còn lại */
+        }
+
+        .text-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Đoạn văn bản được in đậm ở giữa */
+        .text-content p.highlight {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 7. Responsive: Xếp dọc lại khi xem trên màn hình nhỏ (điện thoại) */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .info-card {
+                flex: auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="main-title">
+            Wireframe Connects the Underlying<br>
+            Conceptual Structure
+        </h1>
+
+        <div class="content-wrapper">
+            <div class="info-card">
+                <h2>Wireframe Connects the<br>Underlying Conceptual<br>Structure</h2>
+                <p class="description">
+                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts.
+                </p>
+                <div class="author-info">
+                    <p class="name">Louie Jie Mahusay</p>
+                    <p class="role">CEO, Founder</p>
+                </div>
+            </div>
+
+            <div class="text-content">
+                <p>
+                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts.
+                </p>
+                <p class="highlight">
+                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts.
+                </p>
+                <p>
+                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts. far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts far from the countries Vokalia and Consonantia, there live the blind texts.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

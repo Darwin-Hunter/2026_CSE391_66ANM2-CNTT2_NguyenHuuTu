@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập Flexbox Form</title>
+    
+    <style>
+        /* Reset CSS cơ bản */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            padding: 50px;
+            background-color: #f9f9f9;
+        }
+
+        /* Khung viền ngoài cùng của form */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border: 1px solid #333; /* Viền đen bao quanh theo ảnh */
+        }
+
+        /* Tiêu đề form */
+        .form-title {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* Các nhóm form cách nhau một khoảng */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        /* Flexbox cho hàng có 2 cột (Tên & Email) */
+        .row-flex {
+            display: flex;
+            gap: 20px; /* Khoảng cách giữa 2 ô input */
+        }
+
+        .row-flex input {
+            flex: 1; /* Mỗi input chiếm không gian bằng nhau */
+        }
+
+        /* Flexbox cho hàng cuối cùng (Nút submit & Chữ) */
+        .flex-between {
+            display: flex;
+            justify-content: space-between; /* Đẩy 2 phần tử ra 2 mép (trái/phải) */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            margin-top: 25px;
+        }
+
+        /* Định dạng chung cho Input và Textarea */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 0.95rem;
+            outline: none;
+            color: #333;
+        }
+
+        /* Màu chữ của placeholder (mờ đi giống ảnh) */
+        ::placeholder {
+            color: #a9a9a9;
+        }
+
+        /* Cho phép kéo dãn textarea theo chiều dọc */
+        textarea {
+            resize: vertical;
+        }
+
+        /* Định dạng nút bấm */
+        button {
+            background-color: #79cbf9; /* Màu xanh lơ */
+            color: white;
+            border: 1px solid #66bbed;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #5ab1e6;
+        }
+
+        /* Định dạng dòng chữ ghi chú */
+        .note {
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h3 class="form-title">Get in touch with us by filling contact form below</h3>
+        
+        <form action="#">
+            <div class="form-group row-flex">
+                <input type="text" placeholder="* Enter your full name" required>
+                <input type="email" placeholder="* Enter your email address" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="Enter your subject">
+            </div>
+
+            <div class="form-group">
+                <textarea rows="6" placeholder="* Your message here..." required></textarea>
+            </div>
+
+            <div class="form-footer flex-between">
+                <button type="submit">Send message</button>
+                <span class="note">* Please fill all required form field, thanks!</span>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

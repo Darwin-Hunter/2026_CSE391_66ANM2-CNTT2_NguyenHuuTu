@@ -1,0 +1,79 @@
+#destinations-page {
+  padding: 110px 30px 30px;
+}
+
+#destinations-page h1 {
+  margin: 0 0 18px;
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+}
+
+.places {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.places li {
+  display: flex;
+  background: #f3f3f3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.places img {
+  width: 220px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-content {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.item-content h2 {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+}
+
+.item-content p {
+  margin: 10px 0 0;
+}
+
+.actions {
+  text-align: right;
+  margin-top: 12px;
+}
+
+.actions a {
+  text-decoration: none;
+  font-weight: 700;
+  color: #0066b2;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .places {
+    grid-template-columns: 1fr;
+  }
+
+  .places li {
+    flex-direction: column;
+  }
+
+  .places img {
+    width: 100%;
+    height: 220px;
+  }
+}

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bài 2.2 - Form đặt hàng</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 750px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1f4e79;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: block;
+      margin-top: 4px;
+      min-height: 18px;
+    }
+
+    .invalid {
+      border-color: red !important;
+    }
+
+    .valid {
+      border-color: green !important;
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .char-count.over {
+      color: red;
+      font-weight: bold;
+    }
+
+    .radio-group label {
+      display: inline;
+      margin-right: 16px;
+      font-weight: normal;
+    }
+
+    .total-box {
+      margin: 14px 0;
+      padding: 12px;
+      background: #f0f8ff;
+      border-left: 4px solid #1f7aec;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 16px;
+      background: #1f7aec;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    .confirm-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff8e1;
+    }
+
+    .success-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 8px;
+      background: #d1e7dd;
+      color: #0f5132;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Form Đặt Hàng</h1>
+
+  <form id="orderForm">
+    <div class="form-group">
+      <label for="product">Tên sản phẩm</label>
+      <select id="product">
+        <option value="">-- Chọn sản phẩm --</option>
+        <option value="Áo">Áo</option>
+        <option value="Quần">Quần</option>
+        <option value="Giày">Giày</option>
+        <option value="Túi">Túi</option>
+      </select>
+      <span class="error" id="productError"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Số lượng</label>
+      <input type="number" id="quantity" min="1" max="99" />
+      <span class="error" id="quantityError"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="deliveryDate">Ngày giao hàng</label>
+      <input type="date" id="deliveryDate" />
+      <span class="error" id="deliveryDateError"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Địa chỉ giao</label>
+      <input type="text" id="address" />
+      <span class="error" id="addressError"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="note">Ghi chú</label>
+      <textarea id="note" maxlength="300"></textarea>
+      <div class="char-count" id="noteCount">0/200</div>
+      <span class="error" id="noteError"></span>
+    </div>
+
+    <div class="form-group">
+      <label>Phương thức thanh toán</label>
+      <div class="radio-group">
+        <input type="radio" name="payment" value="COD" id="cod" />
+        <label for="cod">COD</label>
+
+        <input type="radio" name="payment" value="Chuyển khoản" id="bank" />
+        <label for="bank">Chuyển khoản</label>
+
+        <input type="radio" name="payment" value="Ví điện tử" id="wallet" />
+        <label for="wallet">Ví điện tử</label>
+      </div>
+      <span class="error" id="paymentError"></span>
+    </div>
+
+    <div class="total-box" id="totalBox">Tổng tiền: 0 VNĐ</div>
+
+    <button type="submit">Đặt hàng</button>
+  </form>
+
+  <div class="confirm-box" id="confirmBox">
+    <h3>Xác nhận đặt hàng?</h3>
+    <div id="orderSummary"></div>
+    <br />
+    <button type="button" id="confirmBtn">Xác nhận</button>
+    <button type="button" id="cancelBtn" style="background:#dc3545;">Hủy</button>
+  </div>
+
+  <div class="success-box" id="successBox"></div>
+
+  <script>
+    const prices = {
+      "Áo": 150000,
+      "Quần": 200000,
+      "Giày": 500000,
+      "Túi": 300000
+    };
+
+    const form = document.getElementById("orderForm");
+    const product = document.getElementById("product");
+    const quantity = document.getElementById("quantity");
+    const deliveryDate = document.getElementById("deliveryDate");
+    const address = document.getElementById("address");
+    const note = document.getElementById("note");
+    const noteCount = document.getElementById("noteCount");
+    const totalBox = document.getElementById("totalBox");
+    const confirmBox = document.getElementById("confirmBox");
+    const orderSummary = document.getElementById("orderSummary");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const successBox = document.getElementById("successBox");
+
+    function showError(fieldId, message) {
+      const field = document.getElementById(fieldId);
+      const error = document.getElementById(fieldId + "Error");
+      if (field) {
+        field.classList.add("invalid");
+        field.classList.remove("valid");
+      }
+      error.textContent = message;
+    }
+
+    function clearError(fieldId) {
+      const field = document.getElementById(fieldId);
+      const error = document.getElementById(fieldId + "Error");
+      if (field) {
+        field.classList.remove("invalid");
+        field.classList.add("valid");
+      }
+      error.textContent = "";
+    }
+
+    function showGroupError(errorId, message) {
+      document.getElementById(errorId).textContent = message;
+    }
+
+    function clearGroupError(errorId) {
+      document.getElementById(errorId).textContent = "";
+    }
+
+    function validateProduct() {
+      if (product.value === "") {
+        showError("product", "Vui lòng chọn sản phẩm");
+        return false;
+      }
+      clearError("product");
+      return true;
+    }
+
+    function validateQuantity() {
+      const value = Number(quantity.value);
+      if (quantity.value.trim() === "") {
+        showError("quantity", "Số lượng không được để trống");
+        return false;
+      }
+      if (!Number.isInteger(value) || value < 1 || value > 99) {
+        showError("quantity", "Số lượng phải là số nguyên từ 1 đến 99");
+        return false;
+      }
+      clearError("quantity");
+      return true;
+    }
+
+    function validateDeliveryDate() {
+      const value = deliveryDate.value;
+      if (value === "") {
+        showError("deliveryDate", "Vui lòng chọn ngày giao hàng");
+        return false;
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const selected = new Date(value);
+      selected.setHours(0, 0, 0, 0);
+
+      const maxDate = new Date(today);
+      maxDate.setDate(maxDate.getDate() + 30);
+
+      if (selected < today) {
+        showError("deliveryDate", "Ngày giao hàng không được trong quá khứ");
+        return false;
+      }
+
+      if (selected > maxDate) {
+        showError("deliveryDate", "Ngày giao hàng không được quá 30 ngày từ hôm nay");
+        return false;
+      }
+
+      clearError("deliveryDate");
+      return true;
+    }
+
+    function validateAddress() {
+      const value = address.value.trim();
+      if (value === "") {
+        showError("address", "Địa chỉ giao không được để trống");
+        return false;
+      }
+      if (value.length < 10) {
+        showError("address", "Địa chỉ giao phải có ít nhất 10 ký tự");
+        return false;
+      }
+      clearError("address");
+      return true;
+    }
+
+    function validateNote() {
+      const value = note.value.trim();
+      if (value.length > 200) {
+        showError("note", "Ghi chú không được vượt quá 200 ký tự");
+        return false;
+      }
+      clearError("note");
+      return true;
+    }
+
+    function validatePayment() {
+      const payment = document.querySelector('input[name="payment"]:checked');
+      if (!payment) {
+        showGroupError("paymentError", "Vui lòng chọn phương thức thanh toán");
+        return false;
+      }
+      clearGroupError("paymentError");
+      return true;
+    }
+
+    function updateNoteCount() {
+      const len = note.value.length;
+      noteCount.textContent = `${len}/200`;
+
+      if (len > 200) {
+        noteCount.classList.add("over");
+      } else {
+        noteCount.classList.remove("over");
+      }
+    }
+
+    function updateTotal() {
+      const selectedProduct = product.value;
+      const qty = Number(quantity.value);
+
+      if (selectedProduct && Number.isInteger(qty) && qty > 0) {
+        const total = prices[selectedProduct] * qty;
+        totalBox.textContent = `Tổng tiền: ${total.toLocaleString("vi-VN")} VNĐ`;
+      } else {
+        totalBox.textContent = "Tổng tiền: 0 VNĐ";
+      }
+    }
+
+    function getPaymentValue() {
+      const payment = document.querySelector('input[name="payment"]:checked');
+      return payment ? payment.value : "";
+    }
+
+    product.addEventListener("change", () => {
+      validateProduct();
+      updateTotal();
+    });
+
+    quantity.addEventListener("input", () => {
+      document.getElementById("quantityError").textContent = "";
+      quantity.classList.remove("invalid");
+      updateTotal();
+    });
+
+    quantity.addEventListener("blur", validateQuantity);
+    deliveryDate.addEventListener("blur", validateDeliveryDate);
+    address.addEventListener("blur", validateAddress);
+    note.addEventListener("blur", validateNote);
+
+    deliveryDate.addEventListener("input", () => {
+      document.getElementById("deliveryDateError").textContent = "";
+      deliveryDate.classList.remove("invalid");
+    });
+
+    address.addEventListener("input", () => {
+      document.getElementById("addressError").textContent = "";
+      address.classList.remove("invalid");
+    });
+
+    note.addEventListener("input", () => {
+      document.getElementById("noteError").textContent = "";
+      note.classList.remove("invalid");
+      updateNoteCount();
+      validateNote();
+    });
+
+    document.querySelectorAll('input[name="payment"]').forEach(radio => {
+      radio.addEventListener("change", validatePayment);
+    });
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const isValid =
+        validateProduct() &
+        validateQuantity() &
+        validateDeliveryDate() &
+        validateAddress() &
+        validateNote() &
+        validatePayment();
+
+      if (!isValid) return;
+
+      const total = prices[product.value] * Number(quantity.value);
+      orderSummary.innerHTML = `
+        <p><b>Sản phẩm:</b> ${product.value}</p>
+        <p><b>Số lượng:</b> ${quantity.value}</p>
+        <p><b>Tổng tiền:</b> ${total.toLocaleString("vi-VN")} VNĐ</p>
+        <p><b>Ngày giao:</b> ${deliveryDate.value}</p>
+        <p><b>Thanh toán:</b> ${getPaymentValue()}</p>
+      `;
+
+      confirmBox.style.display = "block";
+    });
+
+    confirmBtn.addEventListener("click", function() {
+      form.style.display = "none";
+      confirmBox.style.display = "none";
+      successBox.style.display = "block";
+      successBox.innerHTML = "Đặt hàng thành công! 🎉";
+    });
+
+    cancelBtn.addEventListener("click", function() {
+      confirmBox.style.display = "none";
+    });
+
+    updateNoteCount();
+    updateTotal();
+  </script>
+</body>
+</html>
